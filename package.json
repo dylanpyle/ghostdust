@@ -1,0 +1,36 @@
+{
+  "name": "ghostdust",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "start-prod": "ts-node src",
+    "dev": "env $(cat .env | xargs -d '\\n') nodemon -w src -e ts --exec \"ts-node src\"",
+    "format": "prettier \"src/**/*.ts\" --write",
+    "test-format": "prettier \"src/**/*.ts\" -l",
+    "test": "bin/test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dylanpyle/ghostdust.git"
+  },
+  "author": "Dylan Pyle <me@dylanpyle.com>",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/dylanpyle/ghostdust/issues"
+  },
+  "homepage": "https://github.com/dylanpyle/ghostdust#readme",
+  "dependencies": {
+    "ts-node": "^7.0.1",
+    "typescript": "^3.2.2"
+  },
+  "devDependencies": {
+    "@types/sinon": "^7.0.13",
+    "ava": "^2.4.0",
+    "nodemon": "^1.18.9",
+    "prettier": "^1.16.0",
+    "sinon": "^7.5.0"
+  }
+}
