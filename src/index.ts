@@ -113,8 +113,6 @@ const server = new ssh2.Server({
   });
 });
 
-const port = process.env.PORT ? parseInt(process.env.PORT) : 2323;
-
-server.listen(port, '0.0.0.0', function() {
-  console.log(`Up and running on ${port}`);
+server.listen(22, '0.0.0.0', function() {
+  console.log(`Up and running`);
 });
