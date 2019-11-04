@@ -60,15 +60,19 @@ const server = new ssh2.Server({
       const width = 54;
       const leftPad = (cols - 2 - width) / 2;
 
-      const repeat = (str: string, n: number): string => {
-        const length = Math.max(n, 0);
-        return new Array(length).fill(str).join('');
+      const pad = (n: number): string => {
+        let result = '';
+        for (let i = 0; i < n; i++) {
+          const str = Math.random() < 0.2 ? '.' : ' ';
+          result += str;
+        }
+        return result;
       }
 
       const center = (line: string): string => {
-        const leftSpace = repeat(' ', Math.floor(leftPad));
+        const leftSpace = pad(Math.floor(leftPad));
         const rightPad = cols - 2 - line.length - leftPad;
-        const rightSpace = repeat(' ', Math.ceil(rightPad));
+        const rightSpace = pad(Math.ceil(rightPad));
         return  '.' + leftSpace + line + rightSpace + '.';
       }
 
