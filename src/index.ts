@@ -8,7 +8,7 @@ const ansi = (code: string): string => `\u001b[${code}`;
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const server = new ssh2.Server({
-  hostKeys: [readFileSync('/users/dylan/.ssh/id_rsa')]
+  hostKeys: [readFileSync('fake.key')]
 }, (client: ssh2.Connection) => {
   const id = Math.round(Math.random() * 1e5);
   let name: string | null = null;
@@ -111,6 +111,8 @@ const server = new ssh2.Server({
   client.on('end', function() {
     log('End');
   });
+
+  client.on('error', console.error);
 });
 
 server.listen(22, '0.0.0.0', function() {
