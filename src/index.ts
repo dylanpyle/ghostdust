@@ -1,8 +1,6 @@
 import * as ssh2 from 'ssh2';
 import { readFileSync } from 'fs';
 
-console.log('Here we go!');
-
 const motd = readFileSync('art.txt').toString()
 
 const ansi = (code: string): string => `\u001b[${code}`;
