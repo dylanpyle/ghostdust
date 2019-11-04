@@ -3,3 +3,4 @@ npm-debug.log
 dist
 .env
 .test.env
+host.key
