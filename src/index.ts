@@ -60,7 +60,10 @@ const server = new ssh2.Server({
       const width = 54;
       const leftPad = (cols - 2 - width) / 2;
 
-      const repeat = (str: string, n: number): string => new Array(n).fill(str).join('');
+      const repeat = (str: string, n: number): string => {
+        const length = Math.max(n, 0);
+        return new Array(length).fill(str).join('');
+      }
 
       const center = (line: string): string => {
         const leftSpace = repeat(' ', Math.floor(leftPad));
@@ -70,7 +73,7 @@ const server = new ssh2.Server({
       }
 
       const lines = motd.split('\n');
-      const verticalPadding = (rows - 3 - lines.length) / 2;
+      const verticalPadding = Math.max(0, (rows - 3 - lines.length) / 2);
 
       const msg: string[] = [];
 
