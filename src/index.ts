@@ -2,8 +2,10 @@ import * as ssh2 from 'ssh2';
 import { readFileSync } from 'fs';
 
 const motd = readFileSync('art.txt').toString()
+const width = 78;
 
 const ansi = (code: string): string => `\u001b[${code}`;
+const block = '█';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -36,9 +38,10 @@ const server = new ssh2.Server({
     let stream: ssh2.ServerChannel;
 
     session.on('pty', function(accept, _reject, info) {
-      accept();
       rows = info.rows;
       cols = info.cols;
+
+      accept();
     });
 
     session.on('shell', async function(accept) {
@@ -52,12 +55,19 @@ const server = new ssh2.Server({
         stream.write(`${text}\n${lineStart}`);
       }
 
+      if (cols < 80) {
+        write('Please try again from an >80 character terminal.');
+        stream.exit(1);
+        stream.end();
+        return;
+      }
+
+
       stream.write(clear);
       stream.write(topLeft);
 
-      const dottedLine = new Array(cols).fill('.').join('');
+      const dottedLine = new Array(cols).fill(block).join('');
 
-      const width = 54;
       const leftPad = (cols - 2 - width) / 2;
 
       const pad = (n: number): string => {
@@ -73,7 +83,7 @@ const server = new ssh2.Server({
         const leftSpace = pad(Math.floor(leftPad));
         const rightPad = cols - 2 - line.length - leftPad;
         const rightSpace = pad(Math.ceil(rightPad));
-        return  '.' + leftSpace + line + rightSpace + '.';
+        return block + leftSpace + line + rightSpace + block;
       }
 
       const lines = motd.split('\n');
@@ -99,7 +109,7 @@ const server = new ssh2.Server({
 
       for (const msgLine of msg) {
         await write(msgLine);
-        await sleep(150);
+        await sleep(90);
       }
 
       await sleep(1000);
