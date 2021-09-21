@@ -23,7 +23,7 @@
   "homepage": "https://github.com/dylanpyle/ghostdust#readme",
   "dependencies": {
     "@types/ssh2": "^0.5.39",
-    "ssh2": "^0.8.5",
+    "ssh2": "^1.4.0",
     "ts-node": "^7.0.1",
     "typescript": "^3.2.2"
   },
